@@ -1,8 +1,13 @@
-div {
+.outer {
   max-width: 80%;
   margin: 2rem auto;
 }
 
 table {
   background-color: rgb(223, 223, 223);
+  .priority {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 }

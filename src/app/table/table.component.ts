@@ -35,7 +35,8 @@ const ELEMENT_DATA: UserRequest[] = createRandomRequests(200);
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent {
-  dataSource = ELEMENT_DATA;
+  completeData = ELEMENT_DATA;
+  filteredData = ELEMENT_DATA;
   displayedColumns: string[] = [
     'userName',
     'subject',
@@ -43,4 +44,12 @@ export class TableComponent {
     'priority',
     'status',
   ];
+  getImageColor(priority: 'High' | 'Medium' | 'Low'): string {
+    const imgSrc: { High: string; Medium: string; Low: string } = {
+      High: '#ff8800',
+      Medium: '#fffb00',
+      Low: '#838383',
+    };
+    return imgSrc[priority];
+  }
 }

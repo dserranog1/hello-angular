@@ -1,0 +1,10 @@
+<div class="outer">
+  <mat-form-field appearance="fill">
+    <mat-select [(value)]="selected" (valueChange)="filterDidChange('status')">
+      <mat-option value="all">All status</mat-option>
+      <mat-option value="pending">Pending</mat-option>
+      <mat-option value="solved">Solved</mat-option>
+      <mat-option value="open">Open</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

@@ -1,5 +1,10 @@
-<div>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z9">
+<div class="outer">
+  <app-filters-bar
+    [(filteredData)]="filteredData"
+    [completeData]="completeData"
+  ></app-filters-bar>
+  <h3>{{ filteredData.length }} requests</h3>
+  <table mat-table [dataSource]="filteredData" class="mat-elevation-z9">
     <ng-container matColumnDef="userName">
       <th mat-header-cell *matHeaderCellDef>User Name</th>
       <td mat-cell *matCellDef="let element">{{ element.name }}</td>
@@ -19,7 +24,19 @@
 
     <ng-container matColumnDef="priority">
       <th mat-header-cell *matHeaderCellDef>Priority</th>
-      <td mat-cell *matCellDef="let element">{{ element.priority }}</td>
+      <td mat-cell *matCellDef="let element">
+        <div class="priority">
+          <svg height="10" width="10">
+            <circle
+              cx="5"
+              cy="5"
+              r="5"
+              [attr.fill]="getImageColor(element.priority)"
+            />
+          </svg>
+          {{ element.priority }}
+        </div>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="status">
