@@ -1,0 +1,22 @@
+.outer {
+  height: 100px;
+  // width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 2rem 2rem;
+}
+
+.buttons {
+  display: flex;
+  align-self: flex-end;
+  gap: 1rem;
+}
+
+mat-select {
+  width: 250px;
+}
+
+button {
+  width: 50px;
+}

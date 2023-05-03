@@ -1,0 +1,30 @@
+.outer {
+  display: flex;
+  align-items: center;
+  width: full;
+  gap: 3rem;
+  margin-bottom: 1rem;
+}
+
+.dynamic-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  input {
+    height: 1.775rem;
+    width: 16rem;
+    outline: none;
+    border: 2px solid rgb(199, 199, 199);
+    padding-left: 6px;
+  }
+  input:focus {
+    border-color: #3f51b5;
+  }
+}
+
+mat-select {
+  width: 150px;
+  background-color: #dfdfdf;
+  padding: 6px;
+  border-radius: 3px;
+}

@@ -1,0 +1,21 @@
+<div class="outer">
+  <mat-select [(value)]="selected" placeholder="Select an option">
+    <span *ngFor="let filter of filters">
+      <mat-option *ngIf="!filter.isActive" [value]="filter">{{
+        filter.name
+      }}</mat-option>
+    </span>
+  </mat-select>
+  <mat-dialog-actions class="buttons">
+    <button
+      mat-raised-button
+      [disabled]="!selected"
+      (click)="handleAddFilter()"
+      color="primary"
+      mat-dialog-close
+    >
+      Add
+    </button>
+    <button mat-stroked-button color="warn" mat-dialog-close>Cancel</button>
+  </mat-dialog-actions>
+</div>
