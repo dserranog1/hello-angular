@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Filter, NewFilters } from '../filters-bar/filters-bar.component';
+import { Filter } from '../filters-bar/filters-bar.component';
 
 @Component({
   selector: 'app-filters-dialog',
