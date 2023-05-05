@@ -2,7 +2,7 @@
   <ng-container *ngFor="let filter of filters">
     <span *ngIf="filter.isActive" class="dynamic-filter">
       <mat-select
-        *ngIf="filter.type === 'select'; else elseBlock"
+        *ngIf="filter.filterType !== 'text'; else elseBlock"
         [placeholder]="filter.name"
         [(value)]="filter.selectedOption"
         (valueChange)="filterDidChange()"

@@ -2,16 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UserRequest } from '../table/table.component';
 import { FiltersDialogComponent } from '../filters-dialog/filters-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-
-function sortRequests(a: UserRequest, b: UserRequest): number {
-  if (a.customerSatisfaction < b.customerSatisfaction) {
-    return -1;
-  }
-  if (a.customerSatisfaction > b.customerSatisfaction) {
-    return 1;
-  }
-  return 0;
-}
+import { filterText, sortNumerical, sortOrdinal } from '../utils/filters';
 
 interface Option {
   value: string;
@@ -21,7 +12,6 @@ interface Option {
 export interface Filter {
   name: string;
   value: string;
-  type: string;
   filterType: 'numerical' | 'ordinal' | 'text';
   isActive: boolean;
   options?: Option[];
@@ -35,12 +25,10 @@ export interface Filter {
 })
 export class FiltersBarComponent {
   constructor(public dialog: MatDialog) {}
-
   filters: Filter[] = [
     {
       name: 'Status',
       value: 'status',
-      type: 'select',
       filterType: 'ordinal',
       isActive: true,
       options: [
@@ -54,9 +42,8 @@ export class FiltersBarComponent {
     {
       name: 'Customer Satisfaction',
       value: 'customerSatisfaction',
-      type: 'select',
       filterType: 'numerical',
-      isActive: true,
+      isActive: false,
       options: [
         { value: 'high', name: 'Higher first' },
         { value: 'low', name: 'Lower first' },
@@ -66,9 +53,8 @@ export class FiltersBarComponent {
     {
       name: 'Priority',
       value: 'priority',
-      type: 'select',
       filterType: 'ordinal',
-      isActive: true,
+      isActive: false,
       options: [
         { value: 'all', name: 'All priorities' },
         { value: 'low', name: 'Low' },
@@ -79,7 +65,6 @@ export class FiltersBarComponent {
     },
     {
       name: 'Filter by text',
-      type: 'text',
       filterType: 'text',
       value: 'text',
       isActive: false,
@@ -96,34 +81,12 @@ export class FiltersBarComponent {
     this.filteredData = this.completeData;
     this.filters.forEach((filter) => {
       if (filter.isActive && filter.selectedOption?.value !== 'all') {
-        //sort nominal properties
         if (filter.filterType === 'ordinal') {
-          this.filteredData = this.filteredData.filter((item) => {
-            const currentProperty = item[filter.value as keyof UserRequest];
-            if (typeof currentProperty === 'string') {
-              return (
-                currentProperty.toLowerCase() === filter.selectedOption?.value
-              );
-            }
-            return true;
-          });
+          this.filteredData = sortOrdinal(this.filteredData, filter);
         } else if (filter.filterType === 'numerical') {
-          // sort by numerical property
-          if (filter.selectedOption?.value === 'low') {
-            this.filteredData = [...this.filteredData].sort(sortRequests);
-            console.log(this.filteredData);
-          } else if (filter.selectedOption?.value === 'high') {
-            this.filteredData = [...this.filteredData]
-              .sort(sortRequests)
-              .reverse();
-          }
+          this.filteredData = sortNumerical(this.filteredData, filter);
         } else {
-          this.filteredData = this.filteredData.filter((item) => {
-            let nameAndSubject = item.name + item.subject;
-            return nameAndSubject
-              .toLowerCase()
-              .includes(this.query.toLowerCase());
-          });
+          this.filteredData = filterText(this.filteredData, this.query);
         }
       }
     });
